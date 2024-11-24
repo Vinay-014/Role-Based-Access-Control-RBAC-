@@ -115,7 +115,7 @@ npm run doc
 
 ## 🙌 Credits
 
-This library is maintained by **[Vinay-014](https://github.com/Vinay-014)**. It is adapted from a foundational version created by [Zlatko Fedor](https://github.com/seeden). The project has been enhanced and modified to better suit modern development needs.
+This library is maintained by **[Vinay-014](https://github.com/Vinay-014)**.
 
 ---
 
