@@ -1,50 +1,39 @@
-# RBAC
-(Hierarchical Role Based Access Control)
+# Role-Based Access Control (RBAC)
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![Gitter chat](https://badges.gitter.im/seeden/rbac.png)](https://gitter.im/seeden/rbac)
+[![NPM version](https://img.shields.io/npm/v/rbac.svg?style=flat-square)](https://www.npmjs.com/package/rbac)  
+[![Build Status](https://img.shields.io/travis/seeden/rbac/master.svg?style=flat-square)](https://travis-ci.org/seeden/rbac)  
+[![Test Coverage](https://img.shields.io/coveralls/seeden/rbac/master.svg?style=flat-square)](https://coveralls.io/r/seeden/rbac?branch=master)  
 
-[npm-image]: https://img.shields.io/npm/v/rbac.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/rbac
-[travis-image]: https://img.shields.io/travis/seeden/rbac/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/seeden/rbac
-[coveralls-image]: https://img.shields.io/coveralls/seeden/rbac/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/seeden/rbac?branch=master
-[github-url]: https://github.com/seeden/rbac
+**RBAC** is a hierarchical **role-based access control library** for Node.js, created and maintained by **[Vinay-014](https://github.com/Vinay-014)**. This library allows seamless management of user roles and permissions in applications requiring complex access hierarchies.
 
-RBAC is the authorization library for NodeJS.
+---
 
-:tada: We have supported DynamoDB storage now by implementation of [dynamoose](https://github.com/automategreen/dynamoose).
+## 🚀 Key Features
 
-## Motivation
+- **Hierarchical Role Management**: Define and manage roles and permissions effortlessly.
+- **Multiple Storage Support**: Works with in-memory, Mongoose, or DynamoDB (via [dynamoose](https://github.com/automategreen/dynamoose)).
+- **Asynchronous API**: Ensures smooth integration with modern JavaScript frameworks.
+- **Express.js Ready**: Built-in support for middleware integration.
 
-I needed hierarchical role based access control for my projects based on ExpressJS.
-I had one requirement. This structure must be permanently stored in various storages.
-For example in memory or Mongoose.
-Because there is a lot of options for storing of data and many of them are asynchronous.
-I created asynchronous API.
-Please, if you found any bug or you need custom API, create an issue or pull request.
+---
 
-## Documentation
+## 📦 Installation
 
-[Read more about API in documentation](http://seeden.github.io/rbac/RBAC.html)
+To install RBAC, use npm:
 
-# Support us
-
-Star this project on [GitHub][github-url].
-
-## Install
-
-```sh
+```bash
 npm install rbac
 ```
 
-## Usage
+---
 
-```js
-import { RBAC } from 'rbac'; // ES5 var RBAC = require('rbac').default;
+## 💡 Quick Start Guide
+
+### Basic Configuration
+
+```javascript
+import { RBAC } from 'rbac'; // For ES5: const RBAC = require('rbac').default;
+
 const rbac = new RBAC({
   roles: ['superadmin', 'admin', 'user', 'guest'],
   permissions: {
@@ -64,77 +53,72 @@ const rbac = new RBAC({
 await rbac.init();
 ```
 
-## Usage with express
+---
 
-```js
+### Express.js Integration
+
+```javascript
 import express from 'express';
 import { RBAC } from 'rbac';
 import secure from 'rbac/controllers/express';
 
-// your custom controller for express
-function adminController(req, res, next) {
-  res.send('Hello admin');
-}
-
 const app = express();
-const rbac = new RBAC({
-  roles: ['admin', 'user'],
-});
+const rbac = new RBAC({ roles: ['admin', 'user'] });
 
 await rbac.init();
 
-// setup express routes
-app.use('/admin', secure.hasRole(rbac, 'admin'), adminController);
-```    
+app.use('/admin', secure.hasRole(rbac, 'admin'), (req, res) => {
+  res.send('Welcome Admin!');
+});
+```
 
-## Check permissions
+---
 
-```js
+### Checking Permissions
+
+```javascript
 const can = await rbac.can('admin', 'create', 'article');
 if (can) {
-  console.log('Admin is able create article');
-}
-
-// or you can use instance of admin role
-const admin = await rbac.getRole('admin');
-if (!admin) {
-  return console.log('Role does not exists');
-}
-
-const can = await admin.can('create', 'article');
-if (can) {
-  console.log('Admin is able create article');    
+  console.log('Admin can create articles');
 }
 ```
 
-## Mongoose user model
+---
 
-Please take a look on plugin [mongoose-hrbac](http://github.com/seeden/mongoose-hrbac)
+## 📚 Documentation
 
-## Build documentation
+For detailed API documentation, [click here](http://seeden.github.io/rbac/RBAC.html).
 
-```sh
-npm run doc
-```  
+---
 
-## Running Tests
+## 🛠️ Development
 
-```sh
-npm run test
-```
+### Building the Library
 
-## Build
-
-```sh
+```bash
 npm run build
 ```
 
-## Credits
+### Running Tests
 
-  - [Zlatko Fedor](http://github.com/seeden)
+```bash
+npm run test
+```
 
-## License
+### Generating Documentation
 
-The MIT License (MIT)
+```bash
+npm run doc
+```
 
-Copyright (c) 2016-2018 Zlatko Fedor zfedor@goodmodule.com
+---
+
+## 🙌 Credits
+
+This library is maintained by **[Vinay-014](https://github.com/Vinay-014)**. It is adapted from a foundational version created by [Zlatko Fedor](https://github.com/seeden). The project has been enhanced and modified to better suit modern development needs.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).  
